@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>{% block title %}Flask App{% endblock %}</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+    <!-- Load HTMX -->
+    <script src="{{ url_for('static', filename='htmx.min.js.gz') }}"></script>
+    <!-- Load Plotly -->
+    <script src="{{ url_for('static', filename='plotly.min.js.gz') }}"></script>
+    
+    {% block scripts %}
+    <!-- Add additional scripts here -->
+    {% endblock %} 
+    {% block head %}{% endblock %}
+
+</head>
+<body>
+    <header>
+        <nav>
+            <!-- Add navigation items here -->
+        </nav>
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+</body>
+</html>

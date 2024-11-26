@@ -12,9 +12,12 @@ dynamic = ["version"]
 dependencies = [
     'flask',
     'pandas',
-    'plotly'
+    'plotly',
     'geopandas',
 ]
+
+[tool.setuptools.packages]
+find = {}
 
 [tool.ruff.lint]
 extend-select = [
