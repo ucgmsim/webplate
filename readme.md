@@ -199,7 +199,7 @@ import pandas as pd
 from pathlib import Path
 import plotly.express as px
 
-# # Create a Flask Blueprint for the views
+# Create a Flask Blueprint for the views
 bp = flask.Blueprint("views", __name__)
 
 @bp.route("/", methods=["GET"])
