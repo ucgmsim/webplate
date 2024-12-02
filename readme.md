@@ -366,14 +366,13 @@ method.
 Make the following changes to the views and html:
 
 **views.py**
+``` python
 import flask
 import pandas as pd
 from pathlib import Path
 import plotly.express as px
 
 # Create a Flask Blueprint for the views
-
-``` python
 bp = flask.Blueprint("views", __name__)
 
 @bp.route("/", methods=["GET"])
