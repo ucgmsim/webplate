@@ -528,7 +528,26 @@ Beside some polish, the website is useful as-is. However, from a UX standpoint, 
 
 For this, we can (and I would encourage you to) use the [*flask request flash functionality*](https://flask.palletsprojects.com/en/stable/patterns/flashing/). However to demo a more interactive approach, one that generalizes to far more than just input validation, we will use HTMX instead. HTMX is a javascript library designed to minimize the amount of javascript you write. It's built on the principle of a Hypermedia system: events trigger requests to the server and the server-side logic returns HTML. Note this is very different from the traditional web dev model where a framework requests and receives JSON from an API and then renders it on the client into HTML.
 
-![HTMX Example](images/htmx.png)
+``` mermaid
+flowchart TD
+    subgraph HTMX
+        HTMX_Client["Client: Minimal JavaScript + HTML"]
+        HTMX_Server["Server: Handles Business Logic and Renders HTML"]
+        HTMX_Backend["Backend: Database and APIs"]
+        HTMX_Client -->|Request HTML| HTMX_Server
+        HTMX_Server -->|Response HTML Partial or Full| HTMX_Client
+        HTMX_Server -->|Data Handling| HTMX_Backend
+    end
+
+    subgraph FE
+        FE_Client["Client: JavaScript framework renders JSON to HTML"]
+        FE_Server["Server: API for JSON/REST/GraphQL"]
+        FE_Backend["Backend: Database and Business Logic"]
+        FE_Client -->|API Request JSON| FE_Server
+        FE_Server -->|API Response JSON| FE_Client
+        FE_Server -->|Data Handling| FE_Backend
+    end
+```
 
 To make our error validation in a traditional frontend-backend split, we would usually either attempt to parse the query on the client side, but more likely we'd send the query to an API endpoint that validates the query and then use the response somehow for feedback. With HTMX, we instead:
 
