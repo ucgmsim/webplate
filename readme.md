@@ -295,7 +295,7 @@ Hello World
 When you run the app with *flask --app app run*  in the root of the
 project you should see this webpage at *localhost:5000*
 
-<img src="media/image1.tmp" style="width:4.875in;height:4.54167in" />
+<img src="images/ims.png" style="width:4.875in;height:4.54167in" />
 
 (Obviously, no points for style here, it's just a demo)
 
@@ -354,7 +354,7 @@ This is the actual injection of the map into html. You need to mark the
 map as safe HTML using the safe filter. If you do not do this Flask will
 escape the HTML markup automatically (see below).
 
-<img src="media/image2.tmp" style="width:4.875in;height:4.54167in" />
+<img src="images/bad_ims.png" style="width:4.875in;height:4.54167in" />
 
 ## Adding Search Queries
 
@@ -519,7 +519,7 @@ if query:
 
 This makes use of the *pd.DataFrame.query* method and its powerful syntax. It implements a pseudo-Python-like language to query dataframes with a search string. Here is an example of this in action filtering for all stations where the rotd100 PGA to rotd50 PGA ratio exceeds 1.3, indicating higher than average directionality. You should read [*the docs for this method*](https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.query.html).
 
-![Example Image](media/image3.tmp)
+![Example Image](images/filtered.png)
 
 Notice also that because this is all plain HTML and a boring compliant server-side rendered web app we get one extra feature for free: linkable data analytics. If you open [*http://127.0.0.1:5000/?query=rotd100+%2F+rotd50+%3E+1.3&intensity_measure=PGA*](http://127.0.0.1:5000/?query=rotd100+%2F+rotd50+%3E+1.3&intensity_measure=PGA) you can see exactly the same view that produced this picture. If you want a similar view with CAV, then you can [*click this link and view that too*](http://127.0.0.1:5000/?query=rotd100+%2F+rotd50+%3E+1.15&intensity_measure=CAV).
 
@@ -529,7 +529,7 @@ Beside some polish, the website is useful as-is. However, from a UX standpoint, 
 
 For this, we can (and I would encourage you to) use the [*flask request flash functionality*](https://flask.palletsprojects.com/en/stable/patterns/flashing/). However to demo a more interactive approach, one that generalizes to far more than just input validation, we will use HTMX instead. HTMX is a javascript library designed to minimize the amount of javascript you write. It's built on the principle of a Hypermedia system: events trigger requests to the server and the server-side logic returns HTML. Note this is very different from the traditional web dev model where a framework requests and receives JSON from an API and then renders it on the client into HTML.
 
-![HTMX Example](media/image4.tmp)
+![HTMX Example](images/htmx.png)
 
 To make our error validation in a traditional frontend-backend split, we would usually either attempt to parse the query on the client side, but more likely we'd send the query to an API endpoint that validates the query and then use the response somehow for feedback. With HTMX, we instead:
 
@@ -541,7 +541,7 @@ Let's do that now. We now create a new file *app/templates/error.html*
 
 **error.html**
 
-```html
+```jinja
 <p style="color: red;">{{ error }}</p>
 ```
 
@@ -586,14 +586,14 @@ Finally, we update index.html to trigger a call to this endpoint when the user h
 
 **index.html**
 
-```html
+```jinja
 <!-- The rest of index.html is omitted as it is unchanged -->
 <input name='query' hx-get="/validate" hx-trigger="keyup delay:300ms changed" hx-target="#error" placeholder='Input your pandas-compatible search query' value="{{ query or '' }}">
 ```
 
 If you do this and put in an erroneous string in the search query, you now get some nice feedback
 
-![Error Feedback](media/image5.tmp)
+![Error Feedback](images/error.png)
 
 Notice what we didn't have to write a single line of javascript to get this functionality to work. What's more, because we aren't doing the validation client-side and use the bona fide *pd.DataFrame.query* our query validation is 100% correct: it validates it will search correctly. You could imagine other kinds of checks you'd want to do with this endpoint, mainly checking that the right columns for plotting are present etc.
 
